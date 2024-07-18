@@ -1,0 +1,133 @@
+import java.util.Scanner;
+
+class Student 
+{
+	String name;
+	int numSubjects;
+	double[] grades;
+
+	public Student(String name, int numSubjects)
+ 	{
+        	this.name = name;
+		this.numSubjects = numSubjects;
+		this.grades = new double[numSubjects];
+	}
+	public String getName() 
+	{
+		return name;
+	}
+
+	public void setGrade(int index,double grade) 
+	{
+        	if (index>=0 && index<numSubjects) 
+		{
+            		grades[index] = grade;
+        	} 
+		else 
+		{
+            		System.out.println("Invalid subject index.");
+        	}
+    	}
+
+	public double[] getGrades() 
+	{
+        	return grades;
+	}
+
+	public double calculateAverageGrade() 
+	{
+        	if (numSubjects == 0) 
+		{
+        		return 0.0;
+        	}
+        	double sum = 0;
+        	for (double grade : grades) 
+		{
+			sum += grade;
+        	}
+        return sum / numSubjects;
+	}
+
+	public String calculateLetterGrade() 
+	{
+        	double average = calculateAverageGrade();
+        	if (average >= 90) 
+		{
+        		return "A";
+        	} 
+		else if (average >= 80) 
+		{
+            		return "B";
+        	} 
+		else if (average >= 70) 
+		{
+        		return "C";
+        	} 
+		else if (average >= 60) 
+		{
+        		return "D";
+        	} 
+		else 
+		{
+			return "F";
+		}
+	}
+
+	public double calculateGPA() 
+	{
+        	double average = calculateAverageGrade();
+        	if (average >= 90) 
+		{
+			return 9.0;
+        	} 
+		else if (average >= 80) 
+		{
+			return 8.0;
+        	} 
+		else if (average >= 70) 
+		{
+			return 7.0;
+        	} 
+		else if (average >= 60) 
+		{
+            		return 6.0;
+        	} 
+		else 
+		{
+            		return 0.0;
+        	}
+    	}
+}
+
+public class GradeManager
+{
+	public static void main(String[] args) 
+	{
+        	Scanner scanner = new Scanner(System.in);
+        	System.out.print("\nEnter student's name: \n");
+        	String name = scanner.nextLine();
+        	System.out.print("Enter number of subjects or assignments: ");
+        	int numSubjects = scanner.nextInt();
+
+        	Student student = new Student(name, numSubjects);
+
+        	for (int i = 0; i < numSubjects; i++) 
+		{
+            		System.out.print("Enter grades for subject " + (i + 1) + ": ");
+            		double grade = scanner.nextDouble();
+            		student.setGrade(i, grade);
+   		}
+
+       		double averageGrade = student.calculateAverageGrade();
+        	System.out.println("\nAverage grade: " + averageGrade);
+
+        	String letterGrade = student.calculateLetterGrade();
+        	System.out.println("\nLetter grade: " + letterGrade);
+
+        	double gpa = student.calculateGPA();
+        	System.out.println("\nGPA: " + gpa);
+
+        	scanner.close();
+	}
+}
+
